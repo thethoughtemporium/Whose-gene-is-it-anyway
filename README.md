@@ -1,4 +1,4 @@
-# Whos-gene-is-it-anyway
+# Whose-gene-is-it-anyway
 
 ## Welcome to the "Who's Gene is it Anyway" Repo
 
