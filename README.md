@@ -9,6 +9,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 Link to channel: https://youtube.com/c/thethoughtemporium
 
-Last stream: https://youtu.be/ZiWnygcYsiQ
+Last stream: https://www.youtube.com/watch?v=bvIFadgDxRQ
 
 All streams: https://www.youtube.com/playlist?list=PLZLsjPxmF1BEI5CReoklVP4u84kMkjIZp
