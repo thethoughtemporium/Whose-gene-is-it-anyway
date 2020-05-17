@@ -1,8 +1,8 @@
 # Whose-gene-is-it-anyway
 
-## Welcome to the "Who's Gene is it Anyway" Repo
+## Welcome to the "Whose Gene is it Anyway" Repo
 
-This is the collection of all the plasmids designed during the "who's gene is it anyway" live streams.
+This is the collection of all the plasmids designed during the "whose gene is it anyway" live streams.
 
 These plasmids are released as creative commons attribution-share alike. You may download them, modify them, even have them synthesized if you so choose or use them for commercial activity. But you must provide attribution to The Thought Emporium and Justin Atkin, and any derivatives you make must be released under the same license. See the link below for details.
 https://creativecommons.org/licenses/by-sa/4.0/ 
