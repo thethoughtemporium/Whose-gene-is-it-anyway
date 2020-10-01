@@ -30,7 +30,7 @@ function codonsToDNA() {
     + "<td>Occourences</td></tr><tr><td>a</td><td>" + as + "</td></tr>"
     + "<tr><td>c</td><td>" + cs + "</td></tr><tr><td>t</td><td>"
     + ts + "</td></tr><tr><td>g</td><td>" + gs + "</td></tr></table>"
-    + "<p>GC ratio: " + ((gs + cs) / (as + ts) * 100) + "%</p>";
+    + "<p>GC ratio: " + ((as + ts) / (gs + cs) * 100) + "%</p>";
 }
 
 function DNAToCodons() {
