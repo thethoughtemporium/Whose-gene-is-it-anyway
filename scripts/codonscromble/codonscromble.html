@@ -19,7 +19,7 @@ tr:nth-child(even) {
   </head>
   <body>
     <h1>Codon Scrombler</h1>
-    <p>This webpage converts an amino acid sequence to a randomized DNA sequence that codes for that amino acid sequence.</p>
+    <p>This webpage converts an amino acid sequence to a randomized DNA sequence that codes for that amino acid sequence or vice versa.</p>
       <p>Codon Dictionary (edit if your organism does not use certain DNA sequences):</p>
       <textarea id="codondict" rows=24 cols=80 style="float: left; width: 75%;">
 {
@@ -42,7 +42,7 @@ tr:nth-child(even) {
 "T": ["act", "acc", "aca", "acg"],                 
 "W": ["tgg"],                                      
 "Y": ["tat", "tac"],                               
-"V": ["gtt", "gtc", "gta", "gtc"],                 
+"V": ["gtt", "gtc", "gta", "gtg"],                 
 "*": ["taa", "tga", "tag"]                         
 }
       </textarea>
@@ -107,5 +107,7 @@ Stop
       <textarea id="DNA" rows=10 cols=80 placeholder=""></textarea>
       <p>Analytics:</p>
       <div id="analytics"></div>
+      <button onclick="checkForRepeats();">Check DNA for Repeats</button>
+      <div id="repeats"></div>
   </body>
 </html>
