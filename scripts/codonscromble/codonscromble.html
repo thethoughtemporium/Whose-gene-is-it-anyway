@@ -107,7 +107,10 @@ Stop
       <textarea id="DNA" rows=10 cols=80 placeholder=""></textarea>
       <p>Analytics:</p>
       <div id="analytics"></div>
-      <button onclick="checkForRepeats();">Check DNA for Repeats</button>
+      <p>Repeats:</p>
+      Minimum number of base pairs to test for repetitions: <input type="number" id="minrep" min="1" value="10"></input><br>
+      Maximum number of base pairs to test for repetitions: <input type="number" id="maxrep" min="1" value="30"></input><br>
+      <button onclick="checkForRepeats();">Check DNA for Repeats</button> 
       <div id="repeats"></div>
   </body>
 </html>

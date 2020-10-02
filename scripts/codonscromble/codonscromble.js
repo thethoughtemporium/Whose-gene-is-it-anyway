@@ -73,11 +73,13 @@ function DNAToCodons() {
 function checkForRepeats() {
   var analytics = "<table><tr><td>Sequence</td><td>Occourences</td></tr>";
   var dna = document.getElementById("DNA").value.replace(/[\s\d]/g,"");
+  var minrep = parseInt(document.getElementById("minrep").value);
+  var maxrep = parseInt(document.getElementById("maxrep").value);
 
   var repDict = {}; //count the repetitions of all occourances 10+bp long
-  for (var r = 30; r >= 10; r--) {
+  for (var r = maxrep; r >= minrep; r--) {
     //dna.length/2 is picked as things have to repeat at least twice.
-    for (var i = 0; i + r < dna.length; i++) {
+    for (var i = 0; i + r <= dna.length; i++) {
       let selection = dna.slice(i, i + r);
       //increment the count of the selection
       if (repDict[selection] == undefined) {
