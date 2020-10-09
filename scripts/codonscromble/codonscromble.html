@@ -20,7 +20,18 @@ tr:nth-child(even) {
   <body>
     <h1>Codon Scrombler</h1>
     <p>This webpage converts an amino acid sequence to a randomized DNA sequence that codes for that amino acid sequence or vice versa.</p>
-      <p>Codon Dictionary (edit if your organism does not use certain DNA sequences):</p>
+    <p>Codon Dictionary</p>
+    <select id="dict" oninput="getDict()">
+      <option value="human">Human</option>
+      <option value="Drosophila">Drosophila</option>
+      <option value="mouse">Mouse</option>
+      <option value="saccharomyces">Yeast</option>
+      <option value="Arabidopsis">Arabidopsis</option>
+      <option value="all">All usual triplets</option>
+      <option value="custom">Custom</option>
+    </select>
+    <div id="customcodon">
+      <p>Custom Codon Dictionary</p>
       <textarea id="codondict" rows=24 cols=80 style="float: left; width: 75%;">
 {
 "A": ["gct", "gcc", "gca", "gcg"],                 
@@ -71,32 +82,7 @@ Valine (Val)
 Stop
 
       </textarea>
-      <p>Example for yeast:</p>
-      <pre>
-{
-"A": ["gct", "gcc", "gca"],                     
-"R": ["cgt", "cgc", "cga", "cgg", "aga", "agg"],
-"N": ["aat", "aac"],                            
-"D": ["gat", "gac"],                            
-"C": ["tgt", "tgc"],                            
-"Q": ["caa", "cag"],                            
-"E": ["gaa", "gag"],                            
-"G": ["ggt", "ggc", "gga"],              
-"H": ["cat", "cac"],                            
-"I": ["att", "atc"],                     
-"L": ["tta", "ttg"],
-"K": ["aaa", "aag"],                            
-"M": ["atg"],                                   
-"F": ["ttt", "ttc"],                            
-"P": ["cct", "ccc", "cca"],              
-"S": ["tct", "tcc", "tca"],
-"T": ["act", "acc", "aca", "acg"],              
-"W": ["tgg"],                                   
-"Y": ["tat", "tac"],                            
-"V": ["gtt", "gta"],              
-"*": ["taa", "tga", "tag"]                      
-}
-      </pre>
+    </div>
       <p>Codon sequence:</p>
       <textarea id="codons" rows=10 cols=80 placeholder="MAAKIFSILM LLALSACVLD ATIFPQYSQA PIAALLPPYL PSMTASVCEN PTLQPYRLQQ AIATSNLPLS PLLFQQSPAL SLVQSLVQTI RAQQLQQLVL PLINQVALAN LSPYSQQQQF LPFNQLSTLN LAAYLQQQLL PFSQLATAYS QQQQFLPFNQ LAALNPAAYL QQQILLPFGQ LATTNRASFL TQQQLLPFYQ QFSANPATLL QLQQLLPFVQ LALTNPAAFY QQHIIGGAIF *"></textarea>
       <p>

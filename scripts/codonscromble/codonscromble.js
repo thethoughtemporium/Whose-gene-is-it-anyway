@@ -1,5 +1,173 @@
+var defaultCodonDicts = {
+"human":
+{
+"A": ["gct", "gcc", "gca"],
+"R": ["cgg", "aga", "agg"],
+"N": ["aat", "aac"],
+"D": ["gat", "gac"],
+"C": ["tgt", "tgc"],
+"Q": ["caa", "cag"],
+"E": ["gaa", "gag"],
+"G": ["ggt", "ggc", "gga", "ggg"],
+"H": ["cat", "cac"],
+"I": ["att", "atc"],
+"L": ["ctt", "ctc", "ctg", "ttg"],
+"K": ["aaa", "aag"],
+"M": ["atg"],
+"F": ["ttt", "ttc"],
+"P": ["cct", "ccc", "cca"],
+"S": ["tct", "tcc", "tca", "agt", "agc"],
+"T": ["act", "acc", "aca"],
+"W": ["tgg"],
+"Y": ["tat", "tac"],
+"V": ["gtt", "gtc", "gtg"],
+"*": ["taa", "tga", "tag"]
+},
+"Drosophila":
+{
+"A": ["gct", "gcc", "gca", "gcg"],
+"R": ["cgt", "cgc"],
+"N": ["aat", "aac"],
+"D": ["gat", "gac"],
+"C": ["tgt", "tgc"],
+"Q": ["caa", "cag"],
+"E": ["gaa", "gag"],
+"G": ["ggt", "ggc", "gga"],
+"H": ["cat", "cac"],
+"I": ["att", "atc"],
+"L": ["ctc", "ctg", "ttg"],
+"K": ["aaa", "aag"],
+"M": ["atg"],
+"F": ["ttt", "ttc"],
+"P": ["ccc", "cca", "ccg"],
+"S": ["tcc", "tcg", "agt", "agc"],
+"T": ["act", "acc", "aca", "acg"],
+"W": ["tgg"],
+"Y": ["tat", "tac"],
+"V": ["gtt", "gtc", "gtg"],
+"*": ["taa", "tga", "tag"]
+},
+"mouse":
+{
+"A": ["gct", "gcc", "gca"],
+"R": ["cgc", "cgg", "aga", "agg"],
+"N": ["aat", "aac"],
+"D": ["gat", "gac"],
+"C": ["tgt", "tgc"],
+"Q": ["caa", "cag"],
+"E": ["gaa", "gag"],
+"G": ["ggt", "ggc", "gga", "ggg"],
+"H": ["cat", "cac"],
+"I": ["att", "atc"],
+"L": ["ctt", "ctc", "ctg", "ttg"],
+"K": ["aaa", "aag"],
+"M": ["atg"],
+"F": ["ttt", "ttc"],
+"P": ["cct", "ccc", "cca"],
+"S": ["tct", "tcc", "tca", "agt", "agc"],
+"T": ["act", "acc", "aca"],
+"W": ["tgg"],
+"Y": ["tat", "tac"],
+"V": ["gtt", "gtc", "gtg"],
+"*": ["taa", "tga", "tag"]
+},
+"saccharomyces":
+{
+"A": ["gct", "gcc", "gca"],
+"R": ["aga", "agg"],
+"N": ["aat", "aac"],
+"D": ["gat", "gac"],
+"C": ["tgt", "tgc"],
+"Q": ["caa", "cag"],
+"E": ["gaa", "gag"],
+"G": ["ggt", "ggc", "gga"],
+"H": ["cat", "cac"],
+"I": ["att", "atc", "ata"],
+"L": ["ctt", "cta", "ctg", "tta", "ttg"],
+"K": ["aaa", "aag"],
+"M": ["atg"],
+"F": ["ttt", "ttc"],
+"P": ["cct", "cca"],
+"S": ["tct", "tcc", "tca", "agt", "agc"],
+"T": ["act", "acc", "aca"],
+"W": ["tgg"],
+"Y": ["tat", "tac"],
+"V": ["gtt", "gtc", "gta", "gtg"],
+"*": ["taa", "tga", "tag"]
+},
+"Arabidopsis":
+{
+"A": ["gct", "gcc", "gca"],
+"R": ["aga", "agg"],
+"N": ["aat", "aac"],
+"D": ["gat", "gac"],
+"C": ["tgt", "tgc"],
+"Q": ["caa", "cag"],
+"E": ["gaa", "gag"],
+"G": ["ggt", "ggc", "gga", "ggg"],
+"H": ["cat", "cac"],
+"I": ["att", "atc", "ata"],
+"L": ["ctt", "ctc", "cta", "ctg", "tta", "ttg"],
+"K": ["aaa", "aag"],
+"M": ["atg"],
+"F": ["ttt", "ttc"],
+"P": ["cct", "cca"],
+"S": ["tct", "tcc", "tca", "tcg", "agt", "agc"],
+"T": ["act", "acc", "aca"],
+"W": ["tgg"],
+"Y": ["tat", "tac"],
+"V": ["gtt", "gtc", "gta", "gtg"],
+"*": ["taa", "tga", "tag"]
+},
+"all":
+{
+"A": ["gct", "gcc", "gca", "gcg"],
+"R": ["cgt", "cgc", "cga", "cgg", "aga", "agg"],
+"N": ["aat", "aac"],
+"D": ["gat", "gac"],
+"C": ["tgt", "tgc"],
+"Q": ["caa", "cag"],
+"E": ["gaa", "gag"],
+"G": ["ggt", "ggc", "gga", "ggg"],
+"H": ["cat", "cac"],
+"I": ["att", "atc", "ata"],
+"L": ["ctt", "ctc", "cta", "ctg", "tta", "ttg"],
+"K": ["aaa", "aag"],
+"M": ["atg"],
+"F": ["ttt", "ttc"],
+"P": ["cct", "ccc", "cca", "ccg"],
+"S": ["tct", "tcc", "tca", "tcg", "agt", "agc"],
+"T": ["act", "acc", "aca", "acg"],
+"W": ["tgg"],
+"Y": ["tat", "tac"],
+"V": ["gtt", "gtc", "gta", "gtg"],
+"*": ["taa", "tga", "tag"]
+}
+}
+var customDictArea = "";
+window.onload = function() {
+  getDict();
+}
+
+function getDict() {
+  var selected = document.getElementById("dict").value;
+  var customCodonArea = document.getElementById("customcodon");
+  if (selected == "custom") {
+    if (customCodonArea.innerHTML == "") {
+      customCodonArea.innerHTML = customDictArea;
+    }
+    return JSON.parse(document.getElementById("codondict").value);
+  } else {
+    if (customCodonArea.innerHTML != "") {
+      customDictArea = customCodonArea.innerHTML;
+      customCodonArea.innerHTML = "";
+    }
+    return defaultCodonDicts[selected];
+  }
+}
+
 function codonsToDNA() {
-  var dict = JSON.parse(document.getElementById("codondict").value);
+  var dict = getDict();
   var input = document.getElementById("codons").value.replace(/[\s\d]/g,"");
   input = input.toUpperCase();
   var out = "";
@@ -34,7 +202,7 @@ function codonsToDNA() {
 }
 
 function DNAToCodons() {
-  var dict = JSON.parse(document.getElementById("codondict").value);
+  var dict = getDict();
   var input = document.getElementById("DNA").value.replace(/[\s\d]/g,"");
   input = input.toLowerCase();
   var out = "";
@@ -59,7 +227,7 @@ function DNAToCodons() {
       }
       if (c == undefined) {
         //we have not found any codon for the DNA triplet
-        alert("The DNA triplet \"" + t + "\" at position " + i + "is invalid.");
+        alert("The DNA triplet \"" + t + "\" at position " + i + " is invalid. Maybe try Selecting \"All usual triplets\" from the dropdown at the top.");
         return;
       }
 
