@@ -144,24 +144,41 @@ var defaultCodonDicts = {
 "*": ["taa", "tga", "tag"]
 }
 }
-var customDictArea = "";
+
+function prettyPrintCodonDict(selected) {
+  //selected is the selected codon
+  var r = "{\n";
+  var dict = defaultCodonDicts[selected];
+  for (codon in dict) {
+    r += '"' + codon + '": ' + JSON.stringify(dict[codon]) + ",\n";
+  }
+  //remove the last comma
+  r = r.substring(0, r.length - 2);
+  r += "\n}";
+  return r;
+}
+
+var customDict = prettyPrintCodonDict("all");
+
 window.onload = function() {
   getDict();
 }
 
+function onDictChange() {
+  var dictArea = document.getElementById("codondict");
+  customDict = dictArea.innerHTML;
+}
+
 function getDict() {
   var selected = document.getElementById("dict").value;
-  var customCodonArea = document.getElementById("customcodon");
+  var dictArea = document.getElementById("codondict");
   if (selected == "custom") {
-    if (customCodonArea.innerHTML == "") {
-      customCodonArea.innerHTML = customDictArea;
-    }
-    return JSON.parse(document.getElementById("codondict").value);
+    dictArea.disabled = false;
+    dictArea.innerHTML = customDict;
+    return JSON.parse(dictArea.value);
   } else {
-    if (customCodonArea.innerHTML != "") {
-      customDictArea = customCodonArea.innerHTML;
-      customCodonArea.innerHTML = "";
-    }
+    dictArea.disabled = true;
+    dictArea.innerHTML = prettyPrintCodonDict(selected);
     return defaultCodonDicts[selected];
   }
 }
@@ -227,7 +244,7 @@ function DNAToCodons() {
       }
       if (c == undefined) {
         //we have not found any codon for the DNA triplet
-        alert("The DNA triplet \"" + t + "\" at position " + i + " is invalid. Maybe try Selecting \"All usual triplets\" from the dropdown at the top.");
+        alert("The DNA triplet \"" + t + "\" at position " + i + " is invalid. Maybe try Selecting \"Pichia\" from the dropdown at the top since it supports all codons.");
         return;
       }
 

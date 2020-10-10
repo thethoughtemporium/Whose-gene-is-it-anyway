@@ -25,14 +25,13 @@ tr:nth-child(even) {
       <option value="human">Human</option>
       <option value="Drosophila">Drosophila</option>
       <option value="mouse">Mouse</option>
-      <option value="saccharomyces">Yeast</option>
+      <option value="saccharomyces">Saccharomyces</option>
       <option value="Arabidopsis">Arabidopsis</option>
-      <option value="all">All usual triplets</option>
+      <option value="all">Pichia</option>
       <option value="custom">Custom</option>
     </select>
-    <div id="customcodon">
       <p>Custom Codon Dictionary</p>
-      <textarea id="codondict" rows=24 cols=80 style="float: left; width: 75%;">
+      <textarea id="codondict" rows=24 cols=80 style="float: left; width: 75%;" oninput="onDictChange()">
 {
 "A": ["gct", "gcc", "gca", "gcg"],                 
 "R": ["cgt", "cgc", "cga", "cgg", "aga", "agg"],   
@@ -82,7 +81,6 @@ Valine (Val)
 Stop
 
       </textarea>
-    </div>
       <p>Codon sequence:</p>
       <textarea id="codons" rows=10 cols=80 placeholder="MAAKIFSILM LLALSACVLD ATIFPQYSQA PIAALLPPYL PSMTASVCEN PTLQPYRLQQ AIATSNLPLS PLLFQQSPAL SLVQSLVQTI RAQQLQQLVL PLINQVALAN LSPYSQQQQF LPFNQLSTLN LAAYLQQQLL PFSQLATAYS QQQQFLPFNQ LAALNPAAYL QQQILLPFGQ LATTNRASFL TQQQLLPFYQ QFSANPATLL QLQQLLPFVQ LALTNPAAFY QQHIIGGAIF *"></textarea>
       <p>
