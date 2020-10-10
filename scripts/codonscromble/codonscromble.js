@@ -29,19 +29,15 @@ function codonMapping(reverse) {
 
 function codonsToDNA() {
   let mapping = codonMapping(false);
-  let codons = document.getElementById("codons").value;
+  let codons = document.getElementById("codons").value.replace(/[\s\d]/g, "").toUpperCase();
   let dna = "";
   let stats = { 'a': 0, 'c': 0, 't': 0, 'g': 0 };
 
-  let rng = new Math.seedrandom(document.getElementById("seed").value);
+  let seed = document.getElementById("seed").value;
+  let rng = seed == "" ? new Math.seedrandom() : new Math.seedrandom(seed);
 
-  for (let character of codons) {
-    if (/[\s\d]/.test(character)) {
-      dna += character;
-      continue;
-    }
-
-    let codon = character.toUpperCase();
+  for (let i in codons) {
+    let codon = codons[i];
     if (!(codon in mapping)) {
       alert("The character \"" + codon + "\" at position " + i + " is invalid.");
       return;
@@ -277,7 +273,3 @@ V: gtt,gtc,gta,gtg
 function loadPreset(presetName) {
   document.getElementById("codondict").innerHTML = presets[presetName];
 }
-
-document.addEventListener('DOMContentLoaded', (e) => {
-  document.getElementById("seed").value = Math.floor(Math.random() * 100000000);
-});
