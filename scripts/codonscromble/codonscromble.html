@@ -79,9 +79,9 @@ V: gtt,gtc,gta,gtg
   <textarea id="codons" rows=10 cols=80
     placeholder="MAAKIFSILM LLALSACVLD ATIFPQYSQA PIAALLPPYL PSMTASVCEN PTLQPYRLQQ AIATSNLPLS PLLFQQSPAL SLVQSLVQTI RAQQLQQLVL PLINQVALAN LSPYSQQQQF LPFNQLSTLN LAAYLQQQLL PFSQLATAYS QQQQFLPFNQ LAALNPAAYL QQQILLPFGQ LATTNRASFL TQQQLLPFYQ QFSANPATLL QLQQLLPFVQ LALTNPAAFY QQHIIGGAIF *"></textarea>
   <p>
-    RNG seed: <input id="seed" type="text" placeholder="&lt;random&gt;"/>
-    <button onclick="codonsToDNA();">Convert Codons to DNA \/</button>
     <button onclick="DNAToCodons();">Convert DNA to Codons /\</button>
+    <button onclick="codonsToDNA();">Convert Codons to DNA \/</button>
+    <button onclick="runGCScan(-1);">Minimize GC ratio \/</button>
   </p>
   <div>DNA sequence (ignores whitespace and digits):</div>
   <textarea id="DNA" rows=10 cols=80 placeholder=""></textarea>

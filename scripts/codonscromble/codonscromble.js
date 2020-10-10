@@ -2,11 +2,11 @@ function codonMapping(reverse) {
   let mapLines = document.getElementById("codondict").innerText.split("\n");
   let mapping = {};
   for (let line of mapLines) {
-    if(/^\s*$/.test(line)) continue;
+    if (/^\s*$/.test(line)) continue;
     let split = line.split(':', 3);
     let codon = split[0].trim().toUpperCase();
     let triplets = [];
-    for(let triplet of split[1].split(',')) {
+    for (let triplet of split[1].split(',')) {
       triplets.push(triplet.trim().toLowerCase());
     }
     mapping[codon] = triplets;
@@ -27,21 +27,18 @@ function codonMapping(reverse) {
   return mapping;
 }
 
-function codonsToDNA() {
-  let mapping = codonMapping(false);
-  let codons = document.getElementById("codons").value.replace(/[\s\d]/g, "").toUpperCase();
+function scrambleCodons(mapping, codons, rng) {
   let dna = "";
-  let stats = { 'a': 0, 'c': 0, 't': 0, 'g': 0 };
-
-  let seed = document.getElementById("seed").value;
-  let rng = seed == "" ? new Math.seedrandom() : new Math.seedrandom(seed);
+  let stats = { 'a': 0, 'c': 0, 't': 0, 'g': 0, 'codons': {} };
 
   for (let i in codons) {
     let codon = codons[i];
     if (!(codon in mapping)) {
       alert("The character \"" + codon + "\" at position " + i + " is invalid.");
-      return;
+      return null;
     }
+
+    stats.codons[codon] = (stats.codons[codon] || 0) + 1;
     let options = mapping[codon];
     let choice = options[Math.floor(rng() * options.length)];
 
@@ -50,18 +47,73 @@ function codonsToDNA() {
       stats[choice[j]] = (stats[choice[j]] || 0) + 1;
     }
   }
-  document.getElementById("DNA").value = dna;
 
-  let gcRatio = (stats.g + stats.c) / (stats.a + stats.t + stats.g + stats.c);
+  return {
+    'dna': dna,
+    'stats': stats,
+    'gcRatio': (stats.g + stats.c) / (stats.a + stats.t + stats.g + stats.c)
+  };
+}
+
+function displayDNA(result) {
+  if (result == null)
+    return;
+  document.getElementById("DNA").value = result.dna;
   let analytics = "<table>"
     + "<tr><td>Letter</td><td>Occurrences</td></tr>"
-    + "<tr><td>a</td><td>" + stats.a + "</td></tr>"
-    + "<tr><td>c</td><td>" + stats.c + "</td></tr>"
-    + "<tr><td>t</td><td>" + stats.t + "</td></tr>"
-    + "<tr><td>g</td><td>" + stats.g + "</td></tr>"
+    + "<tr><td>a</td><td>" + result.stats.a + "</td></tr>"
+    + "<tr><td>c</td><td>" + result.stats.c + "</td></tr>"
+    + "<tr><td>t</td><td>" + result.stats.t + "</td></tr>"
+    + "<tr><td>g</td><td>" + result.stats.g + "</td></tr>"
     + "</table>"
-    + "<p>GC ratio: " + (gcRatio * 100).toFixed(2) + "%</p>";
+    + "<p>GC ratio: " + (result.gcRatio * 100).toFixed(2) + "%</p>";
   document.getElementById("analytics").innerHTML = analytics;
+}
+
+function codonsToDNA() {
+  let mapping = codonMapping(false);
+  let codons = document.getElementById("codons").value.replace(/[\s\d]/g, "").toUpperCase();
+
+  displayDNA(scrambleCodons(mapping, codons, new Math.seedrandom()));
+}
+
+let scanState = {
+  'mapping': {},
+  'codons': '',
+  'result': null
+};
+
+// direction: -1 to minimize, +1 to maximize. 
+function runGCScan(direction) {
+  let mapping = codonMapping(false);
+  let codons = document.getElementById("codons").value.replace(/[\s\d]/g, "").toUpperCase();
+  let rng = new Math.seedrandom(); // rng shared between runs is effectively random per run.
+
+  let result;
+  // continue from the last result if nothing changed.
+  if(JSON.stringify(mapping) === JSON.stringify(scanState.mapping) && codons === scanState.codons) {
+    result = scanState.result
+  } else {
+    result = scrambleCodons(mapping, codons, rng);
+  }
+  if(result == null)
+    return;
+  
+  // run another 100 iterations
+  for(let i = 0; i < 100; i++) {
+    let newresult = scrambleCodons(mapping, codons, rng);
+    if((newresult.gcRatio - result.gcRatio) * direction > 0) {
+      result = newresult;
+    }
+  }
+
+  // save the state to resume later
+  scanState = {
+    'mapping': mapping,
+    'codons': codons,
+    'result': result
+  };
+  displayDNA(result);
 }
 
 function DNAToCodons() {
@@ -136,8 +188,8 @@ function checkForRepeats() {
 }
 
 window.presets = {
-'human':
-`A: gct,gcc,gca
+  'human':
+    `A: gct,gcc,gca
 R: cgg,aga,agg
 N: aat,aac
 D: gat,gac
@@ -158,8 +210,8 @@ W: tgg
 Y: tat,tac
 V: gtt,gtc,gtg
 *: taa,tga,tag`,
-'drosophila':
-`A: gct,gcc,gca,gcg
+  'drosophila':
+    `A: gct,gcc,gca,gcg
 R: cgt,cgc
 N: aat,aac
 D: gat,gac
@@ -180,8 +232,8 @@ W: tgg
 Y: tat,tac
 V: gtt,gtc,gtg
 *: taa,tga,tag`,
-'mouse':
-`A: gct,gcc,gca
+  'mouse':
+    `A: gct,gcc,gca
 R: cgc,cgg,aga,agg
 N: aat,aac
 D: gat,gac
@@ -202,8 +254,8 @@ W: tgg
 Y: tat,tac
 V: gtt,gtc,gtg
 *: taa,tga,tag`,
-'saccharomyces':
-`A: gct,gcc,gca
+  'saccharomyces':
+    `A: gct,gcc,gca
 R: aga,agg
 N: aat,aac
 D: gat,gac
@@ -224,8 +276,8 @@ W: tgg
 Y: tat,tac
 V: gtt,gtc,gta,gtg
 *: taa,tga,tag`,
-'arabidopsis':
-`A: gct,gcc,gca
+  'arabidopsis':
+    `A: gct,gcc,gca
 R: aga,agg
 N: aat,aac
 D: gat,gac
@@ -246,8 +298,8 @@ W: tgg
 Y: tat,tac
 V: gtt,gtc,gta,gtg
 *: taa,tga,tag`,
-'all':
-`A: gct,gcc,gca,gcg
+  'all':
+    `A: gct,gcc,gca,gcg
 R: cgt,cgc,cga,cgg,aga,agg
 N: aat,aac
 D: gat,gac
