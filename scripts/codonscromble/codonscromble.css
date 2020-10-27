@@ -1,0 +1,42 @@
+table {
+  border-collapse: collapse;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+td.mono {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#codonkey {
+    vertical-align: baseline;
+    display:inline-block; 
+    white-space: pre;
+    text-align: right;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#codondict {
+    vertical-align: baseline;
+    display:inline-block;
+    white-space: pre;
+    border: 2px solid darkslategray;
+    padding: 4px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#codonkey-container {
+    display:inline-block; 
+    margin-right: 6px;
+}
+
+#codondict-container {
+    display:inline-block;
+}
