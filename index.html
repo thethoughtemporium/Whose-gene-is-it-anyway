@@ -1,10 +1,145 @@
 <html>
-  <head>
-    <title>The Thought Emporium Github Pages Page</title>
-    <meta charset="utf-8"></meta>
-  </head>
-  <body>
-    <a href="scripts/codonscromble/codonscromble.html">
-      Codon Scrombler</a>
-  </body>
+
+<head>
+  <title>Codon Scrombler</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=0.5">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+  <script src="scripts\codonscromble\codonscromble.js"></script>
+  <link href="scripts\codonscromble\codonscromble.css" rel="stylesheet" />
+  <style>
+    header {
+      background-color: #87a3dd;
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer {
+      position: fixed;
+      margin: top 0;
+      ;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: rgb(36, 34, 34);
+      color: white;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <center>
+      <font face="Verdana" size="6">Codon Scrombler</font>
+    </center>
+  </header>
+  <center>
+    <font face="Verdana" size="4"><br>This webpage converts an amino acid sequence to a randomized DNA sequence that
+      codes for that amino acid sequence
+      or vice versa.</font><br />
+    <font face="Verdana" size="4"><br><b>Codon Dictionary</b></font>
+    <br>
+
+
+    <div>(Edit if your organism does not use certain DNA sequences)</div>
+    <br>
+    <div>
+      <div id="codonkey-container">
+        <pre id="codonkey">
+Alanine = Ala = A
+Arginine = Arg = R
+Asparagine = Asn = N
+Aspartic acid = Asp = D
+Cysteine = Cys = C
+Glutamine = Gln = Q
+Glutamic acid = Glu = E
+Glycine = Gly = G
+Histidine = His = H
+Isoleucine = Ile = I
+Leucine = Leu = L
+Lysine = Lys = K
+Methionine = Met = M
+Phenylalanine = Phe = F
+Proline = Pro = P
+Serine = Ser = S
+Threonine = Thr = T
+Tryptophan = Trp = W
+Tyrosine = Tyr = Y
+Valine = Val = V
+Stop = *</pre>
+      </div>
+      <div id="codondict-container">
+        <pre id="codondict" contenteditable="true">
+A: gct,gcc,gca,gcg
+R: cgt,cgc,cga,cgg,aga,agg
+N: aat,aac
+D: gat,gac
+C: tgt,tgc
+Q: caa,cag
+E: gaa,gag
+G: ggt,ggc,gga,ggg
+H: cat,cac
+I: att,atc,ata
+L: ctt,ctc,cta,ctg,tta,ttg
+K: aaa,aag
+M: atg
+F: ttt,ttc
+P: cct,ccc,cca,ccg
+S: tct,tcc,tca,tcg,agt,agc
+T: act,acc,aca,acg
+W: tgg
+Y: tat,tac
+V: gtt,gtc,gta,gtg
+*: taa,tga,tag</pre>
+      </div>
+    </div>
+
+    <div id="preset-list"><b>Presets:</b>
+      <button onclick="loadPreset('arabidopsis');">Arabidopsis</button>
+      <button onclick="loadPreset('drosophila');">Drosophila</button>
+      <button onclick="loadPreset('human');">Human</button>
+      <button onclick="loadPreset('mouse');">Mouse</button>
+      <button onclick="loadPreset('all');">Pichia</button>
+      <button onclick="loadPreset('saccharomyces');">Saccharomyces</button>
+    </div>
+
+    <font face="Verdana" style="color:#4681b1" size="4"><br><b>Conversion</b><br><br></font>
+
+    <div><b>Codon sequence:</b></div>
+    <textarea id="codons" rows=10 cols=80
+      placeholder="MAAKIFSILM LLALSACVLD ATIFPQYSQA PIAALLPPYL PSMTASVCEN PTLQPYRLQQ AIATSNLPLS PLLFQQSPAL SLVQSLVQTI RAQQLQQLVL PLINQVALAN LSPYSQQQQF LPFNQLSTLN LAAYLQQQLL PFSQLATAYS QQQQFLPFNQ LAALNPAAYL QQQILLPFGQ LATTNRASFL TQQQLLPFYQ QFSANPATLL QLQQLLPFVQ LALTNPAAFY QQHIIGGAIF *"></textarea>
+    <p>
+      <button onclick="DNAToCodons();">Convert DNA to Codons /\</button>
+      <button onclick="codonsToDNA();">Convert Codons to DNA \/</button>
+      <button onclick="runGCScan(-1);">Minimize GC ratio \/</button>
+    </p>
+    <div><b>DNA sequence (ignores whitespace and digits):</b></div>
+    <textarea id="DNA" rows=10 cols=80 placeholder=""></textarea>
+
+    <font face="Verdana" style="color:#4681b1" size="4"><br><b>Analytics:</b><br><br></font>
+    <div id="analytics"></div>
+
+    <h2>Repeats:</h2>
+    <button onclick="checkForRepeats();">Check DNA for Repeats</button><br>
+    <b>Minimum number of base pairs to test for repetitions:</b> <input type="number" id="minrep" min="1"
+      value="10"></input><br>
+    <b> Maximum number of base pairs to test for repetitions:</b> <input type="number" id="maxrep" min="1"
+      value="30"></input>
+    <div id="repeats"></div>
+    <br>
+    <br>
+    <br>
+    <br>
+  </center>
+
+  <footer class="footer">
+    <p class="text-center">Copyright &copy; The Thought Emporium</p>
+  </footer>
+</body>
+
 </html>
